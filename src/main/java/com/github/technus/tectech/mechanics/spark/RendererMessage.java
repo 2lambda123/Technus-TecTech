@@ -6,6 +6,7 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import eu.usrv.yamcore.network.client.AbstractClientMessageHandler;
+import io.github.pixee.security.ObjectInputFilters;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,6 +33,7 @@ public class RendererMessage implements IMessage {
             boop = Arrays.copyOfRange(boop, 1, boop.length);
             InputStream is = new ByteArrayInputStream(boop);
             ObjectInputStream ois = new ObjectInputStream(is);
+            ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
             Object data = ois.readObject();
             sparkList = (HashSet<ThaumSpark>) data;
         } catch (IOException | ClassNotFoundException ignored) {

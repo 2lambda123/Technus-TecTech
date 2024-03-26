@@ -1,5 +1,6 @@
 package com.github.technus.tectech.mechanics.enderStorage;
 
+import io.github.pixee.security.ObjectInputFilters;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.storage.MapStorage;
@@ -38,6 +39,7 @@ public class EnderWorldSavedData extends WorldSavedData {
             byte[] ba = nbtTagCompound.getByteArray(ENDER_LIQUID_TAG_LINK);
             InputStream is = new ByteArrayInputStream(ba);
             ObjectInputStream ois = new ObjectInputStream(is);
+            ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
             Object data = ois.readObject();
             EnderLiquidTagLink = (Map<EnderLinkTag, EnderFluidContainer>) data;
         } catch (IOException | ClassNotFoundException ignored) {
@@ -49,6 +51,7 @@ public class EnderWorldSavedData extends WorldSavedData {
             byte[] ba = nbtTagCompound.getByteArray(ENDER_LIQUID_TANK_LINK);
             InputStream is = new ByteArrayInputStream(ba);
             ObjectInputStream ois = new ObjectInputStream(is);
+            ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
             Object data = ois.readObject();
             EnderLiquidTankLink = (Map<EnderLinkTank, EnderLinkTag>) data;
         } catch (IOException | ClassNotFoundException ignored) {

@@ -5,6 +5,7 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import eu.usrv.yamcore.network.client.AbstractClientMessageHandler;
 import eu.usrv.yamcore.network.server.AbstractServerMessageHandler;
 import gregtech.api.metatileentity.BaseMetaTileEntity;
+import io.github.pixee.security.ObjectInputFilters;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fluids.IFluidHandler;
@@ -30,6 +31,7 @@ public class EnderLinkCoverMessage implements IMessage {
             boop = Arrays.copyOfRange(boop, 1, boop.length);
             InputStream is = new ByteArrayInputStream(boop);
             ObjectInputStream ois = new ObjectInputStream(is);
+            ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
             Object data = ois.readObject();
             messageData = (EnderLinkTankWithTag) data;
         } catch (Exception ignore) {
